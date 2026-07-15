@@ -12,6 +12,7 @@ function showResult(message) {
     }
 
     result.innerHTML = message;
+    result.classList.add("show");
 }
 
 async function loadExcel() {
