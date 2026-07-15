@@ -1,6 +1,7 @@
-/* =======================================
+/* ==========================================
    My English Journey 2026 Spring
-======================================= */
+   File: css/style.css
+========================================== */
 
 *{
     margin:0;
@@ -11,12 +12,11 @@
 body{
 
     font-family:
-        "Avenir Next",
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
+    "Segoe UI",
+    Arial,
+    sans-serif;
 
-    background:#f7f9fc;
+    background:#f4f7fb;
 
     color:#333;
 
@@ -25,82 +25,48 @@ body{
 .container{
 
     width:90%;
-    max-width:1200px;
-    margin:auto;
+    max-width:700px;
+
+    margin:60px auto;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.08);
 
 }
 
-/* Header */
-
-header{
-
-    background:#4f46e5;
-
-    color:white;
-
-    padding:20px 0;
-
-    box-shadow:0 3px 12px rgba(0,0,0,.1);
-
-}
-
-header .container{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-}
-
-header h1{
-
-    font-size:36px;
-
-}
-
-nav a{
-
-    color:white;
-
-    text-decoration:none;
-
-    margin-left:25px;
-
-    font-weight:600;
-
-}
-
-nav a:hover{
-
-    color:#ffe082;
-
-}
-
-/* Hero */
-
-.hero{
-
-    padding:80px 0;
+h1{
 
     text-align:center;
 
-}
+    color:#5b5ce2;
 
-.hero h2{
-
-    font-size:48px;
-
-    color:#4f46e5;
-
-    margin-bottom:20px;
+    font-size:40px;
 
 }
 
-.hero p{
+h2{
 
-    font-size:22px;
+    text-align:center;
+
+    color:#777;
+
+    margin-top:10px;
+
+    margin-bottom:25px;
+
+}
+
+.subtitle{
+
+    text-align:center;
+
+    line-height:1.7;
 
     color:#666;
 
@@ -112,9 +78,9 @@ nav a:hover{
 
     display:flex;
 
-    justify-content:center;
+    gap:10px;
 
-    gap:15px;
+    justify-content:center;
 
     margin-bottom:40px;
 
@@ -122,144 +88,159 @@ nav a:hover{
 
 .search-box input{
 
-    width:300px;
+    width:220px;
 
     padding:14px;
 
+    font-size:18px;
+
+    border:
+
+    2px solid #dddddd;
+
     border-radius:10px;
 
-    border:1px solid #ddd;
+}
 
-    font-size:18px;
+.search-box input:focus{
+
+    outline:none;
+
+    border-color:#5b5ce2;
 
 }
 
 .search-box button{
 
-    background:#4f46e5;
+    padding:
+
+    14px 24px;
+
+    background:#5b5ce2;
 
     color:white;
 
     border:none;
 
-    padding:14px 30px;
-
     border-radius:10px;
 
-    font-size:18px;
+    font-size:17px;
 
     cursor:pointer;
-
-}
-
-.search-box button:hover{
-
-    background:#4338ca;
-
-}
-
-/* Cards */
-
-.cards .container{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(auto-fit,minmax(260px,1fr));
-
-    gap:30px;
-
-    margin-bottom:60px;
-
-}
-
-.card{
-
-    background:white;
-
-    border-radius:18px;
-
-    padding:35px;
-
-    text-align:center;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
 
     transition:.3s;
 
 }
 
-.card:hover{
+.search-box button:hover{
 
-    transform:translateY(-10px);
-
-}
-
-.card h3{
-
-    font-size:30px;
-
-    margin-bottom:20px;
-
-    color:#4f46e5;
+    background:#4647c8;
 
 }
 
-.card p{
+.result{
 
-    color:#666;
+    display:none;
 
-    line-height:1.7;
+    background:#fafafa;
+
+    border-radius:15px;
+
+    padding:30px;
+
+    border:
+
+    1px solid #e8e8e8;
 
 }
 
-/* Footer */
+.result.show{
 
-footer{
+    display:block;
 
-    background:#4f46e5;
+}
 
-    color:white;
+.result h3{
 
     text-align:center;
 
+    color:#5b5ce2;
+
+    margin-bottom:25px;
+
+    font-size:28px;
+
+}
+
+.item{
+
+    margin-bottom:25px;
+
+}
+
+.item-title{
+
+    font-weight:bold;
+
+    color:#444;
+
+    margin-bottom:8px;
+
+}
+
+.score{
+
+    font-size:30px;
+
+    color:#ff9800;
+
+    font-weight:bold;
+
+}
+
+.sticker{
+
+    font-size:26px;
+
+    color:#f5b301;
+
+}
+
+.comment{
+
+    background:white;
+
+    border-left:
+
+    5px solid #5b5ce2;
+
+    padding:18px;
+
+    line-height:1.8;
+
+    border-radius:8px;
+
+}
+
+.not-found{
+
+    text-align:center;
+
+    color:#e53935;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+}
+
+@media(max-width:700px){
+
+.container{
+
+    margin:20px;
+
     padding:25px;
-
-    margin-top:60px;
-
-}
-
-/* Mobile */
-
-@media(max-width:768px){
-
-header .container{
-
-    flex-direction:column;
-
-}
-
-nav{
-
-    margin-top:20px;
-
-}
-
-nav a{
-
-    margin:10px;
-
-}
-
-.hero h2{
-
-    font-size:34px;
-
-}
-
-.hero p{
-
-    font-size:18px;
 
 }
 
@@ -267,15 +248,23 @@ nav a{
 
     flex-direction:column;
 
-    align-items:center;
-
 }
 
 .search-box input{
 
     width:100%;
 
-    max-width:350px;
+}
+
+.search-box button{
+
+    width:100%;
+
+}
+
+h1{
+
+    font-size:32px;
 
 }
 
