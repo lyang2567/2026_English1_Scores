@@ -3,341 +3,553 @@
    File: css/style.css
 ========================================== */
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
+body {
+    min-height: 100vh;
 
     font-family:
-    "Trebuchet MS",
-    "Comic Sans MS",
-    "Segoe UI",
-    Arial,
-    sans-serif;
+        "Trebuchet MS",
+        "Segoe UI",
+        Arial,
+        sans-serif;
 
-    background:#f5f8ff;
+    color: #333;
 
-    color:#333;
+    background:
+        linear-gradient(
+            135deg,
+            #fff8d8 0%,
+            #eaf7ff 50%,
+            #ffe8f2 100%
+        );
 
+    padding: 30px 0;
 }
 
-.container{
+/* ==============================
+   Main Container
+============================== */
 
-    width:90%;
-    max-width:700px;
+.container {
+    width: 90%;
+    max-width: 720px;
 
-    margin:50px auto;
+    margin: 20px auto;
 
-    background:white;
+    padding: 45px;
 
-    border-radius:25px;
+    background: rgba(255, 255, 255, 0.96);
 
-    padding:45px;
+    border: 4px solid #ffffff;
+    border-radius: 28px;
 
     box-shadow:
-    0 12px 35px rgba(0,0,0,.08);
+        0 16px 40px rgba(61, 77, 113, 0.16);
+}
+
+/* ==============================
+   Header
+============================== */
+
+.page-header {
+    text-align: center;
+}
+
+h1 {
+    color: #5367d8;
+
+    font-size: 42px;
+    line-height: 1.25;
+
+    margin-bottom: 8px;
+}
+
+h2 {
+    color: #f08aaf;
+
+    font-size: 26px;
+
+    margin-bottom: 22px;
+}
+
+.subtitle {
+    max-width: 550px;
+
+    margin: 0 auto 32px;
+
+    color: #666;
+
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+/* ==============================
+   Search Area
+============================== */
+
+.search-box {
+    display: flex;
+
+    justify-content: center;
+    align-items: stretch;
+
+    gap: 12px;
+
+    max-width: 520px;
+
+    margin: 0 auto 18px;
+}
+
+.search-box input {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 15px 18px;
+
+    font-size: 18px;
+
+    color: #333;
+
+    background: #ffffff;
+
+    border: 2px solid #d9def7;
+    border-radius: 14px;
+
+    transition:
+        border-color 0.25s,
+        box-shadow 0.25s;
+}
+
+.search-box input::placeholder {
+    color: #aaa;
+}
+
+.search-box input:focus {
+    outline: none;
+
+    border-color: #6376e5;
+
+    box-shadow:
+        0 0 0 4px rgba(99, 118, 229, 0.12);
+}
+
+.search-box button {
+    padding: 15px 28px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6376e5,
+            #5262cc
+        );
+
+    border: none;
+    border-radius: 14px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 14px rgba(82, 98, 204, 0.22);
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        opacity 0.2s;
+}
+
+.search-box button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 9px 18px rgba(82, 98, 204, 0.28);
+}
+
+.search-box button:active {
+    transform: translateY(0);
+}
+
+.search-box button:disabled {
+    cursor: not-allowed;
+
+    opacity: 0.6;
+
+    transform: none;
+}
+
+/* ==============================
+   Loading Status
+============================== */
+
+.loading-status {
+    text-align: center;
+
+    color: #777;
+
+    font-size: 14px;
+
+    margin-bottom: 24px;
+}
+
+/* ==============================
+   Result Area
+============================== */
+
+.result {
+    display: none;
+
+    width: 100%;
+}
+
+.result.show {
+    display: block;
+
+    animation: resultFadeIn 0.45s ease;
+}
+
+@keyframes resultFadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
 }
 
-h1{
+/* ==============================
+   Result Card
+============================== */
 
-    text-align:center;
+.result-card {
+    position: relative;
 
-    color:#4f6df5;
+    overflow: hidden;
 
-    font-size:42px;
+    text-align: center;
 
-    margin-bottom:10px;
+    padding: 38px 34px;
 
+    background:
+        linear-gradient(
+            180deg,
+            #fffef7 0%,
+            #ffffff 100%
+        );
+
+    border: 3px solid #ffe27a;
+    border-radius: 24px;
+
+    box-shadow:
+        0 12px 28px rgba(93, 75, 30, 0.10);
 }
 
-h2{
+.result-card::before {
+    content: "★";
 
-    text-align:center;
+    position: absolute;
 
-    color:#666;
+    top: 12px;
+    left: 18px;
 
-    margin-bottom:25px;
+    color: #ffd54a;
 
-    font-size:24px;
+    font-size: 28px;
 
+    transform: rotate(-15deg);
 }
 
-.subtitle{
+.result-card::after {
+    content: "★";
 
-    text-align:center;
+    position: absolute;
 
-    line-height:1.8;
+    top: 16px;
+    right: 20px;
 
-    color:#666;
+    color: #ff9fc2;
 
-    margin-bottom:35px;
+    font-size: 24px;
 
+    transform: rotate(15deg);
 }
 
-.search-box{
+/* Student Name */
 
-    display:flex;
+.student-name {
+    color: #5262cc;
 
-    gap:12px;
+    font-size: 42px;
+    line-height: 1.3;
 
-    justify-content:center;
-
-    margin-bottom:40px;
-
+    margin-bottom: 30px;
 }
 
-.search-box input{
+/* Section Title */
 
-    width:230px;
+.section-title {
+    color: #666;
 
-    padding:14px;
+    font-size: 20px;
+    font-weight: bold;
 
-    font-size:18px;
+    letter-spacing: 0.5px;
 
-    border:2px solid #ddd;
-
-    border-radius:12px;
-
+    margin-bottom: 8px;
 }
 
-.search-box input:focus{
+/* ==============================
+   Presentation Grade
+============================== */
 
-    outline:none;
+.grade {
+    display: inline-block;
 
-    border-color:#4f6df5;
+    min-width: 155px;
 
+    margin: 4px auto 30px;
+
+    padding: 10px 24px;
+
+    font-size: 88px;
+    font-weight: 900;
+    line-height: 1.1;
+
+    color: #ffd400;
+
+    background: rgba(255, 255, 255, 0.78);
+
+    border-radius: 25px;
+
+    text-shadow:
+        2px 2px 0 #ffffff,
+        4px 4px 0 rgba(0, 0, 0, 0.05);
 }
 
-.search-box button{
+/* SpongeBob Yellow */
 
-    padding:14px 24px;
+.grade-aplus {
+    color: #f5c400;
 
-    background:#4f6df5;
-
-    color:white;
-
-    border:none;
-
-    border-radius:12px;
-
-    font-size:18px;
-
-    cursor:pointer;
-
-    transition:.3s;
-
+    background: #fff5a8;
 }
 
-.search-box button:hover{
+/* Patrick Pink */
 
-    background:#3558eb;
+.grade-a {
+    color: #f06fa5;
 
+    background: #ffe0ec;
 }
 
-.result{
+/* Squidward Blue */
 
-    display:none;
+.grade-bplus {
+    color: #45a9c9;
 
-    background:#fffdf7;
-
-    border-radius:20px;
-
-    padding:35px;
-
-    border:3px solid #ffe082;
-
-    text-align:center;
-
+    background: #dff6fc;
 }
 
-.result.show{
+/* Mr. Krabs Red */
 
-    display:block;
+.grade-b {
+    color: #e84e4e;
 
+    background: #ffe1df;
 }
 
-.result h3{
+/* Other Grade */
 
-    color:#444;
+.grade-default {
+    color: #6974c9;
 
-    font-size:42px;
-
-    margin-bottom:25px;
-
+    background: #eceeff;
 }
 
-/* 每一个项目 */
+/* ==============================
+   Stickers
+============================== */
 
-.item{
-
-    margin:28px 0;
-
+.sticker-area {
+    margin-bottom: 32px;
 }
 
-/* 标题 */
+.sticker-display {
+    color: #dda800;
 
-.item-title{
+    font-size: 52px;
+    font-weight: bold;
+    line-height: 1.5;
 
-    font-size:20px;
+    margin-top: 5px;
 
-    font-weight:bold;
-
-    color:#666;
-
-    margin-bottom:10px;
-
+    word-break: break-word;
 }
 
-/* 成绩 */
+/* ==============================
+   Message Card
+============================== */
 
-.score{
+.comment-box {
+    position: relative;
 
-    font-size:90px;
+    margin-top: 12px;
 
-    font-weight:bold;
+    padding: 28px 26px;
 
-    margin:10px 0;
+    text-align: left;
 
-    letter-spacing:2px;
+    background: #fff8c9;
 
+    border: 2px dashed #efc94f;
+    border-radius: 20px;
+
+    box-shadow:
+        0 7px 16px rgba(134, 110, 26, 0.10);
 }
 
-/* Sticker */
+.comment-box h3 {
+    text-align: center;
 
-.sticker{
+    color: #d58a28;
 
-    font-size:50px;
+    font-size: 22px;
 
-    margin-top:10px;
-
-    margin-bottom:20px;
-
+    margin-bottom: 14px;
 }
 
-/* Teacher Message */
+.comment-box p {
+    color: #4b4b4b;
 
-.comment{
+    font-size: 21px;
+    line-height: 1.9;
 
-    background:#fff9d8;
-
-    border:none;
-
-    border-radius:18px;
-
-    padding:22px;
-
-    line-height:2;
-
-    font-size:24px;
-
-    color:#444;
-
-    box-shadow:0 4px 10px rgba(0,0,0,.05);
-
+    white-space: pre-line;
 }
 
-/* Not Found */
+/* ==============================
+   Error Messages
+============================== */
 
-.not-found{
+.error-card {
+    text-align: center;
 
-    text-align:center;
+    padding: 28px;
 
-    color:#e53935;
+    background: #fff3f3;
 
-    font-size:24px;
-
-    font-weight:bold;
-
+    border: 2px solid #ffc4c4;
+    border-radius: 18px;
 }
 
-/* ===== 成绩颜色 ===== */
+.error-card h2 {
+    color: #df4c4c;
 
-.score.aplus{
+    font-size: 25px;
 
-    color:#FFD400;
-
+    margin-bottom: 10px;
 }
 
-.score.a{
+.error-card p {
+    color: #666;
 
-    color:#FF6FB5;
-
+    font-size: 17px;
+    line-height: 1.7;
 }
 
-.score.bplus{
+/* ==============================
+   Mobile
+============================== */
 
-    color:#55C5FF;
+@media (max-width: 700px) {
 
-}
+    body {
+        padding: 10px 0 25px;
+    }
 
-.score.b{
+    .container {
+        width: calc(100% - 28px);
 
-    color:#FF5A5A;
+        margin: 10px auto;
 
-}
+        padding: 28px 20px;
 
-/* 手机 */
+        border-radius: 22px;
+    }
 
-@media(max-width:700px){
+    h1 {
+        font-size: 33px;
+    }
 
-.container{
+    h2 {
+        font-size: 23px;
+    }
 
-    margin:20px;
+    .subtitle {
+        font-size: 15px;
 
-    padding:25px;
+        margin-bottom: 25px;
+    }
 
-}
+    .search-box {
+        flex-direction: column;
+    }
 
-.search-box{
+    .search-box input,
+    .search-box button {
+        width: 100%;
+    }
 
-    flex-direction:column;
+    .result-card {
+        padding: 32px 20px;
+    }
 
-}
+    .student-name {
+        font-size: 34px;
 
-.search-box input{
+        margin-bottom: 25px;
+    }
 
-    width:100%;
+    .section-title {
+        font-size: 18px;
+    }
 
-}
+    .grade {
+        min-width: 130px;
 
-.search-box button{
+        font-size: 70px;
 
-    width:100%;
+        margin-bottom: 25px;
+    }
 
-}
+    .sticker-display {
+        font-size: 42px;
+    }
 
-h1{
+    .comment-box {
+        padding: 24px 20px;
+    }
 
-    font-size:34px;
+    .comment-box h3 {
+        font-size: 20px;
+    }
 
-}
-
-.result h3{
-
-    font-size:32px;
-
-}
-
-.score{
-
-    font-size:70px;
-
-}
-
-.comment{
-
-    font-size:20px;
-
-}
-
-.sticker{
-
-    font-size:42px;
-
-}
+    .comment-box p {
+        font-size: 18px;
+    }
 
 }
