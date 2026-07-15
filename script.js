@@ -81,16 +81,10 @@ function searchStudent() {
         return;
     }
 
-    const student = students.find(row => {
-        const id =
-            row["Student ID"] ??
-            row["StudentID"] ??
-            row["student_id"] ??
-            row["学号"] ??
-            "";
-
-        return String(id).trim() === enteredId;
-    });
+   const student = students.find(row => {
+    const id = Object.values(row)[0];
+    return String(id).trim() === enteredId;
+});
 
     if (!student) {
         result.innerHTML = `
