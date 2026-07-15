@@ -1,38 +1,53 @@
-const students = {
+let students = [];
 
-    "240001": {
-        name: "Yuna",
-        presentation: 95,
-        stickers: 28,
-        comment: "You really did a wonderful job! I am so proud of your presentation. Keep smiling and keep speaking English!"
-    },
+// 读取 Excel
+async function loadExcel() {
+    const response = await fetch("data/English1_2026Spring_Template.xlsx");
+    const arrayBuffer = await response.arrayBuffer();
 
-    "240002": {
-        name: "Aoi",
-        presentation: 92,
-        stickers: 25,
-        comment: "Excellent work this semester. Thank you for being part of my English journey."
-    },
+    const workbook = XLSX.read(arrayBuffer, {
+        type: "array"
+    });
 
-    "240003": {
-        name: "Mihana",
-        presentation: 98,
-        stickers: 31,
-        comment: "Your presentation was amazing! Stay happy and keep challenging yourself!"
-    },
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    students = XLSX.utils.sheet_to_json(sheet);
+}
 
-    "240004": {
-        name: "Arisa",
-        presentation: 96,
-        stickers: 30,
-        comment: "You overcame every challenge. Fantastic presentation!"
-    },
+loadExcel();
 
-    "240005": {
-        name: "Shusuke",
-        presentation: 88,
-        stickers: 20,
-        comment: "Good effort this semester. Keep practicing English every day."
+// 查询学生
+function searchStudent() {
+
+    const id = document.getElementById("studentId").value.trim();
+
+    const student = students.find(s =>
+        String(s["Student ID"]) === id
+    );
+
+    const result = document.getElementById("result");
+
+    if (!student) {
+        result.innerHTML = `
+        <div class="card">
+            <h2>❌ Student Not Found</h2>
+        </div>`;
+        return;
     }
 
-};
+    result.innerHTML = `
+    <div class="card">
+        <h2>${student.Name}</h2>
+
+        <p><strong>Student ID：</strong>${student["Student ID"]}</p>
+
+        <p><strong>Presentation：</strong>
+        ${student.Presentation}</p>
+
+        <p style="font-size:40px">
+        ${student.Stickers}
+        </p>
+
+        <p>${student["Message from Yanyan"]}</p>
+    </div>
+    `;
+}
