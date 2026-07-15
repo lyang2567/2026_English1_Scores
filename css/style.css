@@ -1,234 +1,282 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Student Grade System">
-    <meta name="author" content="Yang Liu">
+/* =======================================
+   My English Journey 2026 Spring
+======================================= */
 
-    <title>Student Grade System</title>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
-</head>
+body{
 
-<body>
+    font-family:
+        "Avenir Next",
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
 
-    <!-- Header -->
-    <header class="header">
+    background:#f7f9fc;
 
-        <div class="container">
+    color:#333;
 
-            <div class="logo">
-                <h1>🎓 Student Grade System</h1>
-            </div>
+}
 
-            <nav class="navigation">
+.container{
 
-                <ul>
+    width:90%;
+    max-width:1200px;
+    margin:auto;
 
-                    <li>
-                        <a href="index.html">Home</a>
-                    </li>
+}
 
-                    <li>
-                        <a href="pages/login.html">Login</a>
-                    </li>
+/* Header */
 
-                    <li>
-                        <a href="#features">Features</a>
-                    </li>
+header{
 
-                    <li>
-                        <a href="#about">About</a>
-                    </li>
+    background:#4f46e5;
 
-                </ul>
+    color:white;
 
-            </nav>
+    padding:20px 0;
 
-        </div>
+    box-shadow:0 3px 12px rgba(0,0,0,.1);
 
-    </header>
+}
 
-    <!-- Hero -->
+header .container{
 
-    <section class="hero">
+    display:flex;
 
-        <div class="container hero-grid">
+    justify-content:space-between;
 
-            <div class="hero-text">
+    align-items:center;
 
-                <h2>Student Grade Management Platform</h2>
+}
 
-                <p>
-                    A modern web application for students and teachers.
-                    Check grades, GPA, completed courses,
-                    and academic progress quickly and securely.
-                </p>
+header h1{
 
-                <div class="hero-buttons">
+    font-size:36px;
 
-                    <a class="primary-btn"
-                       href="pages/login.html">
-                        Login
-                    </a>
+}
 
-                    <a class="secondary-btn"
-                       href="#features">
-                        Learn More
-                    </a>
+nav a{
 
-                </div>
+    color:white;
 
-            </div>
+    text-decoration:none;
 
-            <div class="hero-image">
+    margin-left:25px;
 
-                <img
-                    src="images/hero.svg"
-                    alt="Student Grade System">
+    font-weight:600;
 
-            </div>
+}
 
-        </div>
+nav a:hover{
 
-    </section>
+    color:#ffe082;
 
-    <!-- Features -->
+}
 
-    <section
-        class="features"
-        id="features">
+/* Hero */
 
-        <div class="container">
+.hero{
 
-            <h2 class="section-title">
-                Features
-            </h2>
+    padding:80px 0;
 
-            <div class="card-grid">
+    text-align:center;
 
-                <div class="feature-card">
+}
 
-                    <div class="icon">
-                        📊
-                    </div>
+.hero h2{
 
-                    <h3>Grade Report</h3>
+    font-size:48px;
 
-                    <p>
-                        View semester grades,
-                        credits and GPA instantly.
-                    </p>
+    color:#4f46e5;
 
-                </div>
+    margin-bottom:20px;
 
-                <div class="feature-card">
+}
 
-                    <div class="icon">
-                        👨‍🎓
-                    </div>
+.hero p{
 
-                    <h3>Student Dashboard</h3>
+    font-size:22px;
 
-                    <p>
-                        Personal learning records
-                        and academic statistics.
-                    </p>
+    color:#666;
 
-                </div>
+    margin-bottom:35px;
 
-                <div class="feature-card">
+}
 
-                    <div class="icon">
-                        👩‍🏫
-                    </div>
+.search-box{
 
-                    <h3>Teacher Management</h3>
+    display:flex;
 
-                    <p>
-                        Manage students,
-                        courses and scores.
-                    </p>
+    justify-content:center;
 
-                </div>
+    gap:15px;
 
-                <div class="feature-card">
+    margin-bottom:40px;
 
-                    <div class="icon">
-                        🔒
-                    </div>
+}
 
-                    <h3>Secure Login</h3>
+.search-box input{
 
-                    <p>
-                        User authentication
-                        and permission control.
-                    </p>
+    width:300px;
 
-                </div>
+    padding:14px;
 
-            </div>
+    border-radius:10px;
 
-        </div>
+    border:1px solid #ddd;
 
-    </section>
+    font-size:18px;
 
-    <!-- About -->
+}
 
-    <section
-        class="about"
-        id="about">
+.search-box button{
 
-        <div class="container">
+    background:#4f46e5;
 
-            <h2 class="section-title">
-                About
-            </h2>
+    color:white;
 
-            <p class="about-text">
+    border:none;
 
-                This project is developed with
-                HTML5, CSS3 and JavaScript.
+    padding:14px 30px;
 
-                The architecture is designed
-                for future integration with
-                Firebase, Supabase or MySQL.
+    border-radius:10px;
 
-                It can also be deployed directly
-                using GitHub Pages.
+    font-size:18px;
 
-            </p>
+    cursor:pointer;
 
-        </div>
+}
 
-    </section>
+.search-box button:hover{
 
-    <!-- Footer -->
+    background:#4338ca;
 
-    <footer class="footer">
+}
 
-        <div class="container">
+/* Cards */
 
-            <p>
+.cards .container{
 
-                © 2026 Student Grade System
+    display:grid;
 
-                All Rights Reserved.
+    grid-template-columns:
+        repeat(auto-fit,minmax(260px,1fr));
 
-            </p>
+    gap:30px;
 
-        </div>
+    margin-bottom:60px;
 
-    </footer>
+}
 
-    <script src="js/utils.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/app.js"></script>
+.card{
 
-</body>
-</html>
+    background:white;
+
+    border-radius:18px;
+
+    padding:35px;
+
+    text-align:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-10px);
+
+}
+
+.card h3{
+
+    font-size:30px;
+
+    margin-bottom:20px;
+
+    color:#4f46e5;
+
+}
+
+.card p{
+
+    color:#666;
+
+    line-height:1.7;
+
+}
+
+/* Footer */
+
+footer{
+
+    background:#4f46e5;
+
+    color:white;
+
+    text-align:center;
+
+    padding:25px;
+
+    margin-top:60px;
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+header .container{
+
+    flex-direction:column;
+
+}
+
+nav{
+
+    margin-top:20px;
+
+}
+
+nav a{
+
+    margin:10px;
+
+}
+
+.hero h2{
+
+    font-size:34px;
+
+}
+
+.hero p{
+
+    font-size:18px;
+
+}
+
+.search-box{
+
+    flex-direction:column;
+
+    align-items:center;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    max-width:350px;
+
+}
+
+}
