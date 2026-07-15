@@ -1,3 +1,4 @@
+alert("script.js loaded");
 let students = [];
 let excelLoaded = false;
 
