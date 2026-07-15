@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>My English Journey 2026 Spring</title>
 
@@ -14,40 +16,50 @@
 
 <body>
 
-<div class="container">
+    <main class="container">
 
-    <h1>🌸 My English Journey</h1>
+        <header class="page-header">
 
-    <h2>Spring 2026</h2>
+            <h1>🌸 My English Journey</h1>
 
-    <p class="subtitle">
-        Enter your Student ID to check your Presentation result,
-        Stickers and Message from Yanyan.
-    </p>
+            <h2>Spring 2026</h2>
 
-    <div class="search-box">
+            <p class="subtitle">
+                Enter your Student ID to check your presentation result,
+                stickers and message from Yanyan.
+            </p>
 
-       <input
-    type="text"
-    id="studentId"
-    placeholder="Student ID"
->
+        </header>
 
-<button id="searchButton" type="button">
-    Search
-</button>
+        <div class="search-box">
 
-<div id="loadingStatus">
-    Loading student information...
-</div>
+            <input
+                type="text"
+                id="studentId"
+                placeholder="Student ID"
+                autocomplete="off"
+            >
 
-<div id="result" class="result"></div>
+            <button id="searchButton" type="button">
+                Search
+            </button>
 
-</div>
+        </div>
 
-<!-- 先读取 Excel 程序 -->
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-<script src="./script.js?v=21"></script>
+        <p id="loadingStatus" class="loading-status">
+            Loading student information...
+        </p>
+
+        <div id="result" class="result"></div>
+
+    </main>
+
+    <!-- Excel library -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <!-- Website program -->
+    <script src="./script.js?v=30"></script>
 
 </body>
+
 </html>
