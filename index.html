@@ -1,20 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English1 Scores</title>
-<link rel="stylesheet" href="css/style.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>English I Score System</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
 </head>
+
 <body>
-<header><h1>English I Score System</h1></header>
-<main>
-<h2>Welcome</h2>
-<p>This is a simple demo website.</p>
-<input placeholder="Student ID">
-<button onclick="search()">Search</button>
-<div id="result"></div>
-</main>
+
+<header>
+
+    <div class="container">
+
+        <h1>🎓 English I Score System</h1>
+
+        <nav>
+
+            <a href="#">Home</a>
+
+            <a href="#">Students</a>
+
+            <a href="#">Grades</a>
+
+            <a href="#">About</a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+<section class="hero">
+
+    <div class="container">
+
+        <h2>
+            Welcome to
+            English I Score System
+        </h2>
+
+        <p>
+
+            Search students,
+            check grades,
+            calculate GPA,
+            and manage courses easily.
+
+        </p>
+
+        <div class="search-box">
+
+            <input
+                id="studentId"
+                type="text"
+                placeholder="Enter Student ID">
+
+            <button onclick="searchStudent()">
+
+                Search
+
+            </button>
+
+        </div>
+
+        <div id="result">
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="cards">
+
+    <div class="container">
+
+        <div class="card">
+
+            <h3>📊 Grades</h3>
+
+            <p>
+                Check semester scores.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>🎓 GPA</h3>
+
+            <p>
+                Automatic GPA calculation.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>👩‍🏫 Teacher</h3>
+
+            <p>
+                Manage student scores.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+
+    © 2026 English I Score System
+
+</footer>
+
 <script src="js/app.js"></script>
+
 </body>
+
 </html>
