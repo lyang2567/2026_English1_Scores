@@ -3,7 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>My English Journey 2026 Spring</title>
 
     <link rel="stylesheet" href="css/style.css">
@@ -14,6 +17,7 @@
 <div class="container">
 
     <h1>🌸 My English Journey</h1>
+
     <h2>Spring 2026</h2>
 
     <p class="subtitle">
@@ -22,58 +26,32 @@
     </p>
 
     <div class="search-box">
-        <input id="studentId" type="text" placeholder="Student ID">
 
-        <button onclick="searchStudent()">
+        <input
+            id="studentId"
+            type="text"
+            inputmode="numeric"
+            placeholder="Student ID">
+
+        <button id="searchButton" type="button">
             Search
         </button>
+
+    </div>
+
+    <div id="status" class="status">
+        Loading student information...
     </div>
 
     <div id="result" class="result"></div>
 
 </div>
 
-<!-- 一定放在最后 -->
+<!-- 先读取 Excel 程序 -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<!-- 再读取自己的程序 -->
 <script src="js/students.js"></script>
-
-</body>
-</html>
-
-    <p class="subtitle">
-
-        Enter your Student ID to check
-        your Presentation result,
-        Stickers and Message from Yanyan.
-
-    </p>
-
-    <div class="search-box">
-
-        <input
-            id="studentId"
-            type="text"
-            placeholder="Student ID">
-
-        <button
-            onclick="searchStudent()">
-
-            Search
-
-        </button>
-
-    </div>
-
-    <div id="result"
-         class="result">
-
-    </div>
-
-</div>
-
-<script src="js/students.js"></script>
-
-<script src="js/app.js"></script>
 
 </body>
 
