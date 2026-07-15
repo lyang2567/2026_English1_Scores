@@ -12,11 +12,13 @@
 body{
 
     font-family:
+    "Trebuchet MS",
+    "Comic Sans MS",
     "Segoe UI",
     Arial,
     sans-serif;
 
-    background:#f4f7fb;
+    background:#f5f8ff;
 
     color:#333;
 
@@ -27,16 +29,16 @@ body{
     width:90%;
     max-width:700px;
 
-    margin:60px auto;
+    margin:50px auto;
 
     background:white;
 
-    border-radius:20px;
+    border-radius:25px;
 
-    padding:40px;
+    padding:45px;
 
     box-shadow:
-    0 10px 30px rgba(0,0,0,.08);
+    0 12px 35px rgba(0,0,0,.08);
 
 }
 
@@ -44,9 +46,11 @@ h1{
 
     text-align:center;
 
-    color:#5b5ce2;
+    color:#4f6df5;
 
-    font-size:40px;
+    font-size:42px;
+
+    margin-bottom:10px;
 
 }
 
@@ -54,11 +58,11 @@ h2{
 
     text-align:center;
 
-    color:#777;
-
-    margin-top:10px;
+    color:#666;
 
     margin-bottom:25px;
+
+    font-size:24px;
 
 }
 
@@ -66,7 +70,7 @@ h2{
 
     text-align:center;
 
-    line-height:1.7;
+    line-height:1.8;
 
     color:#666;
 
@@ -78,7 +82,7 @@ h2{
 
     display:flex;
 
-    gap:10px;
+    gap:12px;
 
     justify-content:center;
 
@@ -88,17 +92,15 @@ h2{
 
 .search-box input{
 
-    width:220px;
+    width:230px;
 
     padding:14px;
 
     font-size:18px;
 
-    border:
+    border:2px solid #ddd;
 
-    2px solid #dddddd;
-
-    border-radius:10px;
+    border-radius:12px;
 
 }
 
@@ -106,25 +108,23 @@ h2{
 
     outline:none;
 
-    border-color:#5b5ce2;
+    border-color:#4f6df5;
 
 }
 
 .search-box button{
 
-    padding:
+    padding:14px 24px;
 
-    14px 24px;
-
-    background:#5b5ce2;
+    background:#4f6df5;
 
     color:white;
 
     border:none;
 
-    border-radius:10px;
+    border-radius:12px;
 
-    font-size:17px;
+    font-size:18px;
 
     cursor:pointer;
 
@@ -134,7 +134,7 @@ h2{
 
 .search-box button:hover{
 
-    background:#4647c8;
+    background:#3558eb;
 
 }
 
@@ -142,15 +142,15 @@ h2{
 
     display:none;
 
-    background:#fafafa;
+    background:#fffdf7;
 
-    border-radius:15px;
+    border-radius:20px;
 
-    padding:30px;
+    padding:35px;
 
-    border:
+    border:3px solid #ffe082;
 
-    1px solid #e8e8e8;
+    text-align:center;
 
 }
 
@@ -162,65 +162,85 @@ h2{
 
 .result h3{
 
-    text-align:center;
+    color:#444;
 
-    color:#5b5ce2;
+    font-size:42px;
 
     margin-bottom:25px;
 
-    font-size:28px;
-
 }
+
+/* 每一个项目 */
 
 .item{
 
-    margin-bottom:25px;
+    margin:28px 0;
 
 }
+
+/* 标题 */
 
 .item-title{
 
+    font-size:20px;
+
     font-weight:bold;
 
-    color:#444;
+    color:#666;
 
-    margin-bottom:8px;
+    margin-bottom:10px;
 
 }
+
+/* 成绩 */
 
 .score{
 
-    font-size:30px;
-
-    color:#ff9800;
+    font-size:90px;
 
     font-weight:bold;
 
+    margin:10px 0;
+
+    letter-spacing:2px;
+
 }
+
+/* Sticker */
 
 .sticker{
 
-    font-size:26px;
+    font-size:50px;
 
-    color:#f5b301;
+    margin-top:10px;
+
+    margin-bottom:20px;
 
 }
+
+/* Teacher Message */
 
 .comment{
 
-    background:white;
+    background:#fff9d8;
 
-    border-left:
+    border:none;
 
-    5px solid #5b5ce2;
+    border-radius:18px;
 
-    padding:18px;
+    padding:22px;
 
-    line-height:1.8;
+    line-height:2;
 
-    border-radius:8px;
+    font-size:24px;
+
+    color:#444;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.05);
 
 }
+
+/* Not Found */
 
 .not-found{
 
@@ -228,11 +248,39 @@ h2{
 
     color:#e53935;
 
-    font-size:20px;
+    font-size:24px;
 
     font-weight:bold;
 
 }
+
+/* ===== 成绩颜色 ===== */
+
+.score.aplus{
+
+    color:#FFD400;
+
+}
+
+.score.a{
+
+    color:#FF6FB5;
+
+}
+
+.score.bplus{
+
+    color:#55C5FF;
+
+}
+
+.score.b{
+
+    color:#FF5A5A;
+
+}
+
+/* 手机 */
 
 @media(max-width:700px){
 
@@ -264,7 +312,31 @@ h2{
 
 h1{
 
+    font-size:34px;
+
+}
+
+.result h3{
+
     font-size:32px;
+
+}
+
+.score{
+
+    font-size:70px;
+
+}
+
+.comment{
+
+    font-size:20px;
+
+}
+
+.sticker{
+
+    font-size:42px;
 
 }
 
