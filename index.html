@@ -2,29 +2,43 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My English Journey 2026 Spring</title>
 
-    <link rel="stylesheet"
-          href="css/style.css">
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-<script src="js/students.js"></script>
-    
-</body>
+
 <body>
 
 <div class="container">
 
     <h1>🌸 My English Journey</h1>
-
     <h2>Spring 2026</h2>
+
+    <p class="subtitle">
+        Enter your Student ID to check your Presentation result,
+        Stickers and Message from Yanyan.
+    </p>
+
+    <div class="search-box">
+        <input id="studentId" type="text" placeholder="Student ID">
+
+        <button onclick="searchStudent()">
+            Search
+        </button>
+    </div>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+<!-- 一定放在最后 -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="js/students.js"></script>
+
+</body>
+</html>
 
     <p class="subtitle">
 
