@@ -52,7 +52,6 @@ async function loadExcel() {
 }
 
 function searchStudent() {
-    alert("Search button works");
     const result = document.getElementById("result");
     const inputElement = document.getElementById("studentId");
 
