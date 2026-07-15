@@ -1,19 +1,17 @@
 let students = [];
 let excelLoaded = false;
 
-// 页面打开后读取 Excel
 async function loadExcel() {
+    const status = document.getElementById("loadingStatus");
     const result = document.getElementById("result");
 
     try {
         const response = await fetch(
-            "./data/English1_2026Spring_Template.xlsx"
+            "./data/English1_2026Spring_Template.xlsx?v=3"
         );
 
         if (!response.ok) {
-            throw new Error(
-                `Excel file could not be loaded: ${response.status}`
-            );
+            throw new Error(`Excel file error: ${response.status}`);
         }
 
         const arrayBuffer = await response.arrayBuffer();
@@ -22,76 +20,83 @@ async function loadExcel() {
             type: "array"
         });
 
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
+        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
 
-        students = XLSX.utils.sheet_to_json(sheet, {
+        students = XLSX.utils.sheet_to_json(firstSheet, {
             defval: ""
         });
 
         excelLoaded = true;
 
-        console.log("Excel loaded successfully.");
-        console.log("Student data:", students);
+        console.log("Students:", students);
+
+        if (status) {
+            status.textContent =
+                `Student information loaded: ${students.length} students`;
+        }
 
     } catch (error) {
-        excelLoaded = false;
+        console.error(error);
 
-        console.error("Excel loading error:", error);
+        if (status) {
+            status.textContent = "Failed to load student information.";
+        }
 
         result.innerHTML = `
             <div class="card">
-                <h2>⚠️ Data Loading Error</h2>
-                <p>The student data could not be loaded.</p>
-                <p>Please check the Excel filename and folder.</p>
+                <h2>⚠️ Excel Loading Error</h2>
+                <p>${error.message}</p>
             </div>
         `;
     }
 }
 
-// 查询学生
 function searchStudent() {
     const result = document.getElementById("result");
+    const inputElement = document.getElementById("studentId");
+
+    if (!inputElement) {
+        alert("studentId input not found");
+        return;
+    }
+
+    const enteredId = inputElement.value.trim();
 
     if (!excelLoaded) {
         result.innerHTML = `
             <div class="card">
                 <h2>⏳ Please wait</h2>
-                <p>The student data is still loading.</p>
+                <p>Student information is still loading.</p>
             </div>
         `;
         return;
     }
 
-    const input = document
-        .getElementById("studentId")
-        .value
-        .trim();
-
-    if (input === "") {
+    if (enteredId === "") {
         result.innerHTML = `
             <div class="card">
-                <h2>✏️ Enter Your Student ID</h2>
+                <h2>✏️ Please enter your Student ID</h2>
             </div>
         `;
         return;
     }
 
-    const student = students.find(item => {
-        const studentId =
-            item["Student ID"] ??
-            item["StudentID"] ??
-            item["student ID"] ??
-            item["学号"];
+    const student = students.find(row => {
+        const id =
+            row["Student ID"] ??
+            row["StudentID"] ??
+            row["student_id"] ??
+            row["学号"] ??
+            "";
 
-        return String(studentId).trim() === input;
+        return String(id).trim() === enteredId;
     });
 
     if (!student) {
         result.innerHTML = `
             <div class="card">
                 <h2>❌ Student Not Found</h2>
-                <p>Please check your Student ID.</p>
+                <p>Entered ID: ${escapeHtml(enteredId)}</p>
             </div>
         `;
         return;
@@ -144,7 +149,6 @@ function searchStudent() {
     `;
 }
 
-// 防止 Excel 内容被当作 HTML 执行
 function escapeHtml(value) {
     return String(value ?? "")
         .replaceAll("&", "&amp;")
@@ -154,15 +158,21 @@ function escapeHtml(value) {
         .replaceAll("'", "&#039;");
 }
 
-// 按 Enter 也可以搜索
 document.addEventListener("DOMContentLoaded", () => {
+    const button = document.getElementById("searchButton");
     const input = document.getElementById("studentId");
 
-    input.addEventListener("keydown", event => {
-        if (event.key === "Enter") {
-            searchStudent();
-        }
-    });
+    if (button) {
+        button.addEventListener("click", searchStudent);
+    }
+
+    if (input) {
+        input.addEventListener("keydown", event => {
+            if (event.key === "Enter") {
+                searchStudent();
+            }
+        });
+    }
 
     loadExcel();
 });
