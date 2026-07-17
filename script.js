@@ -6,8 +6,11 @@ let students = [];
 ======================================== */
 
 async function loadExcel() {
-    const loadingStatus = document.getElementById("loadingStatus");
-    const searchButton = document.getElementById("searchButton");
+    const loadingStatus =
+        document.getElementById("loadingStatus");
+
+    const searchButton =
+        document.getElementById("searchButton");
 
     try {
         loadingStatus.textContent =
@@ -152,6 +155,7 @@ function displayStudentResult(student) {
         "0";
 
     const message =
+        student["Message from Yanyan"] ||
         student["Message"] ||
         student["Yanyan's Message"] ||
         student["Comment"] ||
@@ -225,7 +229,7 @@ function displayStudentResult(student) {
                 <div class="yanyan-signature-area">
 
                     <img
-                        src="images/yanyan.jpg"
+                        src="./images/yanyan.jpg"
                         alt="Yanyan"
                         class="yanyan-avatar"
                     >
@@ -304,10 +308,7 @@ function formatMessage(message) {
         escapeHTML(message);
 
     if (safeMessage.trim() === "") {
-        return `
-            Thank you for your wonderful work
-            this semester!
-        `;
+        return "Thank you for your wonderful work this semester!";
     }
 
     return safeMessage.replace(
