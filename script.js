@@ -1,15 +1,18 @@
 let students = [];
 
-/* =========================
-   读取学生 Excel 文件
-========================= */
+
+/* ========================================
+   Load Student Information from Excel
+======================================== */
 
 async function loadExcel() {
     const loadingStatus = document.getElementById("loadingStatus");
     const searchButton = document.getElementById("searchButton");
 
     try {
-        loadingStatus.textContent = "Loading student information...";
+        loadingStatus.textContent =
+            "Loading student information...";
+
         searchButton.disabled = true;
 
         const response = await fetch(
@@ -17,26 +20,42 @@ async function loadExcel() {
         );
 
         if (!response.ok) {
-            throw new Error("Excel file could not be loaded.");
+            throw new Error(
+                "Excel file could not be loaded."
+            );
         }
 
-        const arrayBuffer = await response.arrayBuffer();
+        const arrayBuffer =
+            await response.arrayBuffer();
 
-        const workbook = XLSX.read(arrayBuffer, {
-            type: "array"
-        });
+        const workbook = XLSX.read(
+            arrayBuffer,
+            {
+                type: "array"
+            }
+        );
 
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
+        const sheetName =
+            workbook.SheetNames[0];
 
-        students = XLSX.utils.sheet_to_json(sheet, {
-            defval: ""
-        });
+        const sheet =
+            workbook.Sheets[sheetName];
+
+        students = XLSX.utils.sheet_to_json(
+            sheet,
+            {
+                defval: ""
+            }
+        );
 
         loadingStatus.textContent = "";
+
         searchButton.disabled = false;
 
-        console.log("Student information loaded:", students);
+        console.log(
+            "Student information loaded:",
+            students
+        );
 
     } catch (error) {
         console.error(error);
@@ -49,39 +68,56 @@ async function loadExcel() {
 }
 
 
-/* =========================
-   查询学生
-========================= */
+/* ========================================
+   Search Student
+======================================== */
 
 function searchStudent() {
-    const input = document.getElementById("studentId");
-    const result = document.getElementById("result");
+    const input =
+        document.getElementById("studentId");
 
-    const studentId = input.value.trim();
+    const result =
+        document.getElementById("result");
+
+    const studentId =
+        input.value.trim();
 
     if (studentId === "") {
         result.innerHTML = `
             <div class="card error-card">
-                <h2>🌼 Please enter your Student ID.</h2>
+
+                <h2>
+                    🌼 Please enter your Student ID.
+                </h2>
+
             </div>
         `;
+
         return;
     }
 
     const student = students.find(item => {
-        return String(item["Student ID"]).trim() === studentId;
+        return String(
+            item["Student ID"]
+        ).trim() === studentId;
     });
 
     if (!student) {
         result.innerHTML = `
             <div class="card error-card">
-                <h2>Student Not Found</h2>
+
+                <h2>
+                    Student Not Found
+                </h2>
 
                 <p>
-                    Please check your Student ID and try again.
+                    Please check your Student ID
+                    and try again.
                 </p>
+
             </div>
         `;
+
         return;
     }
 
@@ -89,12 +125,13 @@ function searchStudent() {
 }
 
 
-/* =========================
-   显示学生成绩卡
-========================= */
+/* ========================================
+   Display Student Result
+======================================== */
 
 function displayStudentResult(student) {
-    const result = document.getElementById("result");
+    const result =
+        document.getElementById("result");
 
     const studentName =
         student["Name"] ||
@@ -120,12 +157,14 @@ function displayStudentResult(student) {
         student["Comment"] ||
         "";
 
-    const gradeClass = getGradeClass(presentationGrade);
+    const gradeClass =
+        getGradeClass(presentationGrade);
 
     result.innerHTML = `
         <div class="card result-card">
 
             <div class="student-name-area">
+
                 <p class="welcome-text">
                     Welcome back,
                 </p>
@@ -133,7 +172,9 @@ function displayStudentResult(student) {
                 <h2 class="student-name">
                     ${escapeHTML(studentName)} ✨
                 </h2>
+
             </div>
+
 
             <div class="result-section">
 
@@ -147,6 +188,7 @@ function displayStudentResult(student) {
 
             </div>
 
+
             <div class="result-section">
 
                 <p class="result-label">
@@ -158,6 +200,7 @@ function displayStudentResult(student) {
                 </div>
 
             </div>
+
 
             <div class="message-section">
 
@@ -171,6 +214,7 @@ function displayStudentResult(student) {
 
             </div>
 
+
             <div class="yanyan-footer">
 
                 <p class="thank-you-message">
@@ -181,7 +225,7 @@ function displayStudentResult(student) {
                 <div class="yanyan-signature-area">
 
                     <img
-                        src="images/yanyan.png"
+                        src="images/yanyan.jpg"
                         alt="Yanyan"
                         class="yanyan-avatar"
                     >
@@ -207,14 +251,15 @@ function displayStudentResult(student) {
 }
 
 
-/* =========================
-   成绩对应的颜色
-========================= */
+/* ========================================
+   Presentation Grade Color
+======================================== */
 
 function getGradeClass(grade) {
-    const normalizedGrade = String(grade)
-        .trim()
-        .toUpperCase();
+    const normalizedGrade =
+        String(grade)
+            .trim()
+            .toUpperCase();
 
     if (normalizedGrade === "A+") {
         return "grade-a-plus";
@@ -236,9 +281,9 @@ function getGradeClass(grade) {
 }
 
 
-/* =========================
-   安全显示 Excel 文字
-========================= */
+/* ========================================
+   Protect Text from HTML Problems
+======================================== */
 
 function escapeHTML(value) {
     return String(value ?? "")
@@ -250,45 +295,59 @@ function escapeHTML(value) {
 }
 
 
-/* =========================
-   保留评语换行
-========================= */
+/* ========================================
+   Keep Line Breaks in Messages
+======================================== */
 
 function formatMessage(message) {
-    const safeMessage = escapeHTML(message);
+    const safeMessage =
+        escapeHTML(message);
 
     if (safeMessage.trim() === "") {
-        return "Thank you for your wonderful work this semester!";
+        return `
+            Thank you for your wonderful work
+            this semester!
+        `;
     }
 
-    return safeMessage.replace(/\r?\n/g, "<br>");
+    return safeMessage.replace(
+        /\r?\n/g,
+        "<br>"
+    );
 }
 
 
-/* =========================
-   页面加载完成后的操作
-========================= */
+/* ========================================
+   Page Start
+======================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
-    const searchButton =
-        document.getElementById("searchButton");
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+        const searchButton =
+            document.getElementById(
+                "searchButton"
+            );
 
-    const studentIdInput =
-        document.getElementById("studentId");
+        const studentIdInput =
+            document.getElementById(
+                "studentId"
+            );
 
-    searchButton.addEventListener(
-        "click",
-        searchStudent
-    );
+        searchButton.addEventListener(
+            "click",
+            searchStudent
+        );
 
-    studentIdInput.addEventListener(
-        "keydown",
-        event => {
-            if (event.key === "Enter") {
-                searchStudent();
+        studentIdInput.addEventListener(
+            "keydown",
+            event => {
+                if (event.key === "Enter") {
+                    searchStudent();
+                }
             }
-        }
-    );
+        );
 
-    loadExcel();
-});
+        loadExcel();
+    }
+);
