@@ -1,64 +1,223 @@
-/* ==========================================
-   My English Journey 2026 Spring
-   File: script.js
-========================================== */
-
 let students = [];
 
-/**
- * Safely escape Excel text before displaying it in HTML.
- */
-function escapeHtml(value) {
-    return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+/* =========================
+   读取学生 Excel 文件
+========================= */
+
+async function loadExcel() {
+    const loadingStatus = document.getElementById("loadingStatus");
+    const searchButton = document.getElementById("searchButton");
+
+    try {
+        loadingStatus.textContent = "Loading student information...";
+        searchButton.disabled = true;
+
+        const response = await fetch(
+            "data/English1_2026Spring_Template.xlsx"
+        );
+
+        if (!response.ok) {
+            throw new Error("Excel file could not be loaded.");
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+
+        const workbook = XLSX.read(arrayBuffer, {
+            type: "array"
+        });
+
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+
+        students = XLSX.utils.sheet_to_json(sheet, {
+            defval: ""
+        });
+
+        loadingStatus.textContent = "";
+        searchButton.disabled = false;
+
+        console.log("Student information loaded:", students);
+
+    } catch (error) {
+        console.error(error);
+
+        loadingStatus.textContent =
+            "Student information could not be loaded.";
+
+        searchButton.disabled = true;
+    }
 }
 
-/**
- * Show content in the result area.
- */
-function showResult(message) {
+
+/* =========================
+   查询学生
+========================= */
+
+function searchStudent() {
+    const input = document.getElementById("studentId");
     const result = document.getElementById("result");
 
-    if (!result) {
-        console.error("Result area was not found.");
+    const studentId = input.value.trim();
+
+    if (studentId === "") {
+        result.innerHTML = `
+            <div class="card error-card">
+                <h2>🌼 Please enter your Student ID.</h2>
+            </div>
+        `;
         return;
     }
 
-    result.innerHTML = message;
-    result.classList.add("show");
-}
+    const student = students.find(item => {
+        return String(item["Student ID"]).trim() === studentId;
+    });
 
-/**
- * Find a column value using several possible header names.
- */
-function getColumnValue(student, possibleHeaders, fallbackValue = "") {
-    for (const header of possibleHeaders) {
-        if (
-            Object.prototype.hasOwnProperty.call(student, header) &&
-            String(student[header]).trim() !== ""
-        ) {
-            return student[header];
-        }
+    if (!student) {
+        result.innerHTML = `
+            <div class="card error-card">
+                <h2>Student Not Found</h2>
+
+                <p>
+                    Please check your Student ID and try again.
+                </p>
+            </div>
+        `;
+        return;
     }
 
-    return fallbackValue;
+    displayStudentResult(student);
 }
 
-/**
- * Return the matching CSS class for each grade.
- */
+
+/* =========================
+   显示学生成绩卡
+========================= */
+
+function displayStudentResult(student) {
+    const result = document.getElementById("result");
+
+    const studentName =
+        student["Name"] ||
+        student["Student Name"] ||
+        student["名前"] ||
+        "Student";
+
+    const presentationGrade =
+        student["Presentation"] ||
+        student["Presentation Grade"] ||
+        student["Grade"] ||
+        "-";
+
+    const stickerNumber =
+        student["Stickers"] ||
+        student["Sticker"] ||
+        student["Sticker Count"] ||
+        "0";
+
+    const message =
+        student["Message"] ||
+        student["Yanyan's Message"] ||
+        student["Comment"] ||
+        "";
+
+    const gradeClass = getGradeClass(presentationGrade);
+
+    result.innerHTML = `
+        <div class="card result-card">
+
+            <div class="student-name-area">
+                <p class="welcome-text">
+                    Welcome back,
+                </p>
+
+                <h2 class="student-name">
+                    ${escapeHTML(studentName)} ✨
+                </h2>
+            </div>
+
+            <div class="result-section">
+
+                <p class="result-label">
+                    Presentation
+                </p>
+
+                <div class="grade-circle ${gradeClass}">
+                    ${escapeHTML(presentationGrade)}
+                </div>
+
+            </div>
+
+            <div class="result-section">
+
+                <p class="result-label">
+                    Stickers
+                </p>
+
+                <div class="sticker-result">
+                    🏅 × ${escapeHTML(stickerNumber)}
+                </div>
+
+            </div>
+
+            <div class="message-section">
+
+                <h3>
+                    💌 A Message from Yanyan
+                </h3>
+
+                <p class="teacher-message">
+                    ${formatMessage(message)}
+                </p>
+
+            </div>
+
+            <div class="yanyan-footer">
+
+                <p class="thank-you-message">
+                    Thank you for being part of
+                    My English Journey. ✨
+                </p>
+
+                <div class="yanyan-signature-area">
+
+                    <img
+                        src="images/yanyan.png"
+                        alt="Yanyan"
+                        class="yanyan-avatar"
+                    >
+
+                    <div class="yanyan-signature">
+
+                        <span class="from-text">
+                            With love,
+                        </span>
+
+                        <span class="signature-name">
+                            Yanyan
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+/* =========================
+   成绩对应的颜色
+========================= */
+
 function getGradeClass(grade) {
     const normalizedGrade = String(grade)
         .trim()
-        .toUpperCase()
-        .replace(/\s/g, "");
+        .toUpperCase();
 
     if (normalizedGrade === "A+") {
-        return "grade-aplus";
+        return "grade-a-plus";
     }
 
     if (normalizedGrade === "A") {
@@ -66,7 +225,7 @@ function getGradeClass(grade) {
     }
 
     if (normalizedGrade === "B+") {
-        return "grade-bplus";
+        return "grade-b-plus";
     }
 
     if (normalizedGrade === "B") {
@@ -76,280 +235,60 @@ function getGradeClass(grade) {
     return "grade-default";
 }
 
-/**
- * Convert the sticker value into a medal display.
- *
- * Examples:
- * 5       → 🏅🏅🏅🏅🏅
- * "5"     → 🏅🏅🏅🏅🏅
- * "🏅🏅🏅" → 🏅🏅🏅
- */
-function formatStickers(value) {
-    const text = String(value ?? "").trim();
 
-    if (text === "") {
-        return "—";
-    }
+/* =========================
+   安全显示 Excel 文字
+========================= */
 
-    const number = Number(text);
-
-    if (Number.isInteger(number) && number >= 0 && number <= 30) {
-        if (number === 0) {
-            return "0";
-        }
-
-        return "🏅".repeat(number);
-    }
-
-    if (text.includes("🏅")) {
-        return text;
-    }
-
-    return text + " 🏅";
+function escapeHTML(value) {
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 }
 
-/**
- * Load student information from Excel.
- */
-async function loadExcel() {
-    const status = document.getElementById("loadingStatus");
-    const searchButton = document.getElementById("searchButton");
 
-    searchButton.disabled = true;
+/* =========================
+   保留评语换行
+========================= */
 
-    try {
-        const response = await fetch(
-            "./data/English1_2026Spring_Template.xlsx?v=30"
-        );
+function formatMessage(message) {
+    const safeMessage = escapeHTML(message);
 
-        if (!response.ok) {
-            throw new Error(
-                "Excel file could not be loaded. HTTP status: " +
-                response.status
-            );
-        }
-
-        const buffer = await response.arrayBuffer();
-
-        const workbook = XLSX.read(buffer, {
-            type: "array"
-        });
-
-        const firstSheetName = workbook.SheetNames[0];
-
-        if (!firstSheetName) {
-            throw new Error("No worksheet was found in the Excel file.");
-        }
-
-        const sheet = workbook.Sheets[firstSheetName];
-
-        students = XLSX.utils.sheet_to_json(sheet, {
-            defval: "",
-            raw: false
-        });
-
-        if (students.length === 0) {
-            throw new Error("No student information was found.");
-        }
-
-        status.textContent =
-            "Student information loaded: " +
-            students.length +
-            " students";
-
-        searchButton.disabled = false;
-
-    } catch (error) {
-        console.error(error);
-
-        status.textContent =
-            "Failed to load student information.";
-
-        showResult(
-            "<div class='error-card'>" +
-                "<h2>⚠️ Excel Loading Error</h2>" +
-                "<p>" +
-                    escapeHtml(error.message) +
-                "</p>" +
-            "</div>"
-        );
+    if (safeMessage.trim() === "") {
+        return "Thank you for your wonderful work this semester!";
     }
+
+    return safeMessage.replace(/\r?\n/g, "<br>");
 }
 
-/**
- * Search for a student by Student ID.
- */
-function searchStudent() {
-    const input = document.getElementById("studentId");
-    const enteredId = String(input.value).trim();
 
-    if (enteredId === "") {
-        showResult(
-            "<div class='error-card'>" +
-                "<h2>Student ID Required</h2>" +
-                "<p>Please enter your Student ID.</p>" +
-            "</div>"
-        );
+/* =========================
+   页面加载完成后的操作
+========================= */
 
-        input.focus();
-        return;
-    }
+document.addEventListener("DOMContentLoaded", () => {
+    const searchButton =
+        document.getElementById("searchButton");
 
-    if (students.length === 0) {
-        showResult(
-            "<div class='error-card'>" +
-                "<h2>Student Information Is Not Ready</h2>" +
-                "<p>Please refresh the page and try again.</p>" +
-            "</div>"
-        );
+    const studentIdInput =
+        document.getElementById("studentId");
 
-        return;
-    }
-
-    const headers = Object.keys(students[0]);
-
-    const idHeader =
-        headers.find(function (header) {
-            const normalizedHeader = String(header)
-                .replace(/\s/g, "")
-                .replace(/_/g, "")
-                .toLowerCase();
-
-            return normalizedHeader.includes("studentid");
-        }) ||
-        headers.find(function (header) {
-            return String(header)
-                .toLowerCase()
-                .includes("id");
-        }) ||
-        headers[0];
-
-    const student = students.find(function (row) {
-        return String(row[idHeader]).trim() === enteredId;
-    });
-
-    if (!student) {
-        showResult(
-            "<div class='error-card'>" +
-                "<h2>❌ Student Not Found</h2>" +
-                "<p>Please check your Student ID and try again.</p>" +
-            "</div>"
-        );
-
-        return;
-    }
-
-    const values = Object.values(student);
-
-    const name = getColumnValue(
-        student,
-        [
-            "Name",
-            "Student Name",
-            "StudentName",
-            "名前",
-            "氏名"
-        ],
-        values[1] || ""
+    searchButton.addEventListener(
+        "click",
+        searchStudent
     );
 
-    const presentation = getColumnValue(
-        student,
-        [
-            "Presentation",
-            "Presentation Grade",
-            "Grade",
-            "Result",
-            "発表成績"
-        ],
-        values[2] || ""
-    );
-
-    const stickers = getColumnValue(
-        student,
-        [
-            "Stickers",
-            "Sticker",
-            "Sticker Count",
-            "貼画",
-            "貼紙"
-        ],
-        values[3] || ""
-    );
-
-    const comment = getColumnValue(
-        student,
-        [
-            "Yanyan's Comment",
-            "Yanyan Comment",
-            "Comment",
-            "Message",
-            "Teacher's Message",
-            "Teacher Message",
-            "陽陽のコメント"
-        ],
-        values[4] || ""
-    );
-
-    const gradeClass = getGradeClass(presentation);
-    const stickerDisplay = formatStickers(stickers);
-
-    showResult(
-        "<article class='result-card'>" +
-
-            "<h2 class='student-name'>" +
-                "🌟 " +
-                escapeHtml(name) +
-            "</h2>" +
-
-            "<section>" +
-                "<h3 class='section-title'>" +
-                    "🎤 Presentation Grade" +
-                "</h3>" +
-
-                "<p class='grade " +
-                    gradeClass +
-                "'>" +
-                    escapeHtml(presentation || "—") +
-                "</p>" +
-            "</section>" +
-
-            "<section class='sticker-area'>" +
-                "<h3 class='section-title'>" +
-                    "🏅 Stickers" +
-                "</h3>" +
-
-                "<p class='sticker-display'>" +
-                    escapeHtml(stickerDisplay) +
-                "</p>" +
-            "</section>" +
-
-            "<section class='comment-box'>" +
-                "<h3>💛 Message from Yanyan</h3>" +
-
-                "<p>" +
-                    escapeHtml(comment || "Keep doing your best!") +
-                "</p>" +
-            "</section>" +
-
-        "</article>"
-    );
-}
-
-/**
- * Start the website after the page is ready.
- */
-document.addEventListener("DOMContentLoaded", function () {
-    const button = document.getElementById("searchButton");
-    const input = document.getElementById("studentId");
-
-    button.addEventListener("click", searchStudent);
-
-    input.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            searchStudent();
+    studentIdInput.addEventListener(
+        "keydown",
+        event => {
+            if (event.key === "Enter") {
+                searchStudent();
+            }
         }
-    });
+    );
 
     loadExcel();
 });
